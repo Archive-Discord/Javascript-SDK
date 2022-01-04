@@ -37,13 +37,20 @@ export class ArchiveClient {
             data: '서버수는 정수만 입력가능합니다'
         }
     }
+    if(!this.token) {
+        console.log('\x1b[33m%s\x1b[0m', '[Archive Clinet]', '\x1b[0m', '토큰 값을 입력해주세요');
+        return {
+            code: false,
+            data: '토큰 값을 입력해주세요'
+        }
+    }
     try {
       let response = await axios({
         method: 'POST',
-        url: `${this.BaseUrl}/bot/${this.clientID}/server`,
+        url: `${this.BaseUrl}/bot/${encodeURI(this.clientID)}/server`,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'authentication': this.token
+          'authentication': encodeURI(this.token)
         },
         data: {
           server: servers.toString()
@@ -69,6 +76,13 @@ export class ArchiveClient {
         };
       };
     } catch (error: any) {
+        if(!error.response.data.data) {
+            console.log('\x1b[33m%s\x1b[0m', '[Archive Clinet]', '\x1b[0m', error.response.data);
+            return {
+                code: false,
+                data: error.response.data
+            };    
+        }
         console.log('\x1b[33m%s\x1b[0m', '[Archive Clinet]', '\x1b[0m', error.response.data.data);
         return {
             code: false,
