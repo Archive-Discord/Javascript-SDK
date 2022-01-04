@@ -1,5 +1,5 @@
 {
-  "name": "archive-sdk",
+  "name": "archives-sdk",
   "version": "1.0.0",
   "description": "JavaScript/TypeScript Archive SDK",
   "main": "dist/index.js",
